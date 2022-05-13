@@ -1,0 +1,16 @@
+# The files and modifications provided by Facebook are for testing and evaluation purposes only.  Facebook reserves all rights not expressly granted.
+
+[alias]
+  antennapod = //:antennapod
+
+[cache]
+  mode = dir
+  dir_max_size = 1GB
+
+[android]
+  target = android-32
+
+[java]
+    src_roots = /java/
+    source_level = 8
+    target_level = 8
