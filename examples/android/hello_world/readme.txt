@@ -3,17 +3,24 @@ This is a sample app that can be built with gradle and buck.
 How to build
 -------------
 
-First, download libraries:
+Define ANDROID_SDK environment variable
 
-./gradlew app:download
+export ANDROID_SDK=/home/yourname/Android/Sdk
 
-That provides dependencies for buck.
+Generate a keystore:
 
-An alternative option:
+cd keystore
+keytool -genkey -keystore debug.keystore -alias my_alias \
+>     -keyalg RSA -keysize 2048 -validity 10000
 
+Create a list of project dependencies
+cd ..
+mkdir buck-out
 ./gradlew -q :app:dependencies --configuration debugCompileClasspath >  buck-out/deps.txt
 ./gradlew -q :app:dependencies --configuration debugRuntimeClasspath >> buck-out/deps.txt
 ./gradlew -q :app:dependencies --configuration debugAnnotationProcessorClasspath >> buck-out/deps.txt
+
+Use the import_deps tool to download dependencies and generate BUCK files.
 
 cd ../import_deps
 ./importdeps.py --gdeps /Users/mdzyuba/whatsapp/android/tools/buck/hello_world/buck-out/deps.txt --libs third-party
@@ -32,7 +39,6 @@ To build and install the app, run:
 buck install //app:app
 
 Then run Hello World app on the device.
-
 
 Hare is a list of sample buck targets:
 
